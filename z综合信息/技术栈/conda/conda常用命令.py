@@ -1,12 +1,13 @@
-conda install 
+pip install 
 
 conda activate py39
 
 # 创建虚拟环境
-conda create --name myenv python=3.8  
+conda create --name py39 python=3.9 
 
 # 激活虚拟环境
-conda activate py39 
+conda activate py39
+conda activate py39_tf 
 
 # 退出虚拟环境
 conda deactivate  
