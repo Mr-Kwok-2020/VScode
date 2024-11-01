@@ -35,3 +35,4 @@ conda update anaconda
 
 # 删除一个Conda环境：
 conda env remove --name myenv
+conda env remove --name py_GT_gan
