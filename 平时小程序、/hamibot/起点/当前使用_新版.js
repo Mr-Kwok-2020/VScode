@@ -303,24 +303,32 @@ function qiandao() {
             log("未找到符合条件的控件: "+aim_text);
         }
 
+ 
+        click(1000,2375);
+        sleep(2000);
+        click(800,1425);
+        sleep(3000)
 
-
-        aim_text = "30张碎片兑换"
-        console.log('点击',aim_text)
-        var part = textStartsWith(aim_text).findOne(2000);
-        if (part !== null && part !== undefined) {
-            var part = part.parent();
-            // 获取该控件的所有子控件
-            var children = part.children();
-            // handleChildControls(children); // 显示所有子件
-
-            // 获取第一个子控件并点击
-            var child = children.get(0);
-            clickParentIfClickable(child);
-            sleep(2000);
-        } else {
-            console.log("未找到符合条件的控件: "+aim_text);
-        }
+        // aim_text = "30张碎片兑换"
+        // console.log('点击',aim_text)
+        // var part = textStartsWith(aim_text).findOne(2000);
+        // if (part !== null && part !== undefined) {
+        //     var part = part.parent();
+        //     // 获取该控件的所有子控件
+        //     var children = part.children();
+        //     // handleChildControls(children); // 显示所有子
+        //     // 获取第一个子控件并点击
+        //     var child = children.get(0);
+        //     clickParentIfClickable(child);
+            
+        //     click(1000,2375);
+        //     sleep(2000);
+        //     click(800,1425);
+        //     sleep(2000)
+            
+        // } else {
+        //     console.log("未找到符合条件的控件: "+aim_text);
+        // }
     } else {
         console.log("今天不是周日");
     }
