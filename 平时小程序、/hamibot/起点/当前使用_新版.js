@@ -304,10 +304,12 @@ function qiandao() {
         }
 
  
+        console.hide();
         click(1000,2375);
         sleep(2000);
         click(800,1425);
         sleep(3000)
+        console.show();
 
         // aim_text = "30张碎片兑换"
         // console.log('点击',aim_text)
@@ -1225,6 +1227,8 @@ function main222() {
     playgame()
     kapai()
 
+    
+    yuepiaocnt = check_yuepiao()
     while (true) {
         readbook(30 * 60)
         kapai()
