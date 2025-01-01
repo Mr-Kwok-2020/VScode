@@ -917,7 +917,7 @@ function mo_yue_redbag() {
     // 隐藏控制台
     console.hide();
     do {
-        gesture(200, [centerX, bottom*0.4], [centerX, bottom*0.9]);
+        gesture(200, [centerX, bottom*0.2], [centerX, bottom*0.9]);
         sleep(500)
 
     } while (!text("马上抢").exists())   

@@ -1228,19 +1228,19 @@ function main222() {
     kapai()
 
     
-    yuepiaocnt = check_yuepiao()
+    // yuepiaocnt = check_yuepiao()
     while (true) {
         readbook(30 * 60)
         kapai()
 
-        if (checkTime2() & yuepiaocnt > 0 & checkDateAfterSet()) {
-            log("符合抢红包日期和时间");
-            log("还剩月票：", yuepiaocnt);
+        // if (checkTime2() & yuepiaocnt > 0 & checkDateAfterSet()) {
+        //     log("符合抢红包日期和时间");
+        //     log("还剩月票：", yuepiaocnt);
 
-            mo_yue_redbag()
+        //     mo_yue_redbag()
 
-            yuepiaocnt = check_yuepiao()
-        }
+        //     yuepiaocnt = check_yuepiao()
+        // }
         get_read_jifen()
     }
     log("所有任务全部完成")
