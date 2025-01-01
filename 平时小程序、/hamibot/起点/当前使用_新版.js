@@ -228,6 +228,7 @@ function qiandao() {
     //停止线程执行
     thread.interrupt();
 
+    sleep(5000);
     aim_text = "已连续签到"
     console.log('点击',aim_text)
     var part = textStartsWith(aim_text).findOne(2000);
@@ -789,7 +790,7 @@ function unlockScreen() {
     do {
         // 唤醒设备
         device.wakeUpIfNeeded();
-        sleep(500);
+        sleep(2000);
 
         // 模拟手势从屏幕底部滑动到屏幕中间
         log("开始上滑进入输入密码");
@@ -828,10 +829,10 @@ function clear_back_tasks() {
     log('清除后台应用')
     home()
     home()
-    gesture(200, [centerX, bottom * 0], [centerX, bottom * 0.5]);
-    sleep(300)
+    // gesture(200, [centerX, bottom * 0], [centerX, bottom * 0.5]);
+    sleep(2000)
     click(850, 2575)
-    sleep(300)
+    sleep(2000)
     click(600, 2400)
     sleep(2000)
 }
@@ -1227,7 +1228,7 @@ function main222() {
     playgame()
     kapai()
 
-    
+
     // yuepiaocnt = check_yuepiao()
     while (true) {
         readbook(30 * 60)
