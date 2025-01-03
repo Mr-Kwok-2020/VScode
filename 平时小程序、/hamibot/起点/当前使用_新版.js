@@ -452,97 +452,197 @@ function lookvd() {
 
 
 
+    aim_text = "看视频";
+    console.log("开始处理", aim_text);
+    
+    // 最大点击次数
+    var maxClicksPerButton = 10;
+    
+    // 查找所有 "看视频" 按钮
+    var buttons = text(aim_text).find();
+    if (buttons.empty()) {
+        console.log("没有找到任何按钮:", aim_text);
+    } else {
+        console.log("找到按钮个数:", buttons.size());
+    
+        // 遍历每个按钮
+        for (var i = 0; i < buttons.size(); i++) {
+            var button = buttons.get(i);
+            console.log(`开始处理第 ${i + 1} 个按钮`);
+    
+            var clicks = 0;
+            while (clicks < maxClicksPerButton) {
+                // 点击按钮
+                if (clickParentIfClickable(button)) {
+                    console.log(`第 ${i + 1} 个按钮已点击 ${clicks + 1} 次`);
+                    waitad(); // 等待广告处理完成
+                    sleep(1000);
+    
+                    // 处理弹窗等干扰项
+                    var dialog = text("知道了").findOne(500);
+                    if (dialog != null) {
+                        clickParentIfClickable(dialog);
+                        console.log("关闭弹窗");
+                    }
+                    sleep(1000);
+    
+                    // 刷新按钮状态
+                    buttons = text(aim_text).find();
+                    if (i < buttons.size() && buttons.get(i).text() !== aim_text) {
+                        console.log(`第 ${i + 1} 个按钮状态已改变`);
+                        break; // 跳出当前按钮的处理循环
+                    }
+                } else {
+                    console.log(`无法点击第 ${i + 1} 个按钮`);
+                }
+    
+                clicks++;
+                if (clicks >= maxClicksPerButton) {
+                    console.log(`第 ${i + 1} 个按钮状态未改变，达到最大点击次数，跳过`);
+                }
+            }
+        }
+    }
+    console.log("所有按钮处理完成", aim_text);
+    
+    
+
+
+
+
+    // aim_text = "看视频"
+    // console.log('开始',aim_text)
+    // var part = textStartsWith(aim_text).findOne(2000);
+    // handleChildControls(part.parent().children());
+    // bottom_ID = 2
+    // console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // while (part.parent().children().get(bottom_ID).text() == '看视频'){
+    //     clickParentIfClickable(part.parent().children().get(bottom_ID));
+    //     waitad()
+    //     sleep(1000);
+    //     clickParentIfClickable(text("我知道了").findOne(500))
+    //     sleep(1000);
+    //     part = textStartsWith(aim_text).findOne(2000);
+    //     console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // }    
+    // console.log('结束',aim_text)
+
+
+
+
+
+    // aim_text = "看视频"
+    // console.log('开始',aim_text)
+    // var part = textStartsWith(aim_text).findOne(2000);
+    // handleChildControls(part.parent().parent().children(2));
+    // bottom_ID = 2
+    // console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // while (part.parent().children().get(bottom_ID).text() == '看视频'){
+    //     clickParentIfClickable(part.parent().children().get(bottom_ID));
+    //     waitad()
+    //     sleep(1000);
+    //     clickParentIfClickable(text("我知道了").findOne(500))
+    //     sleep(1000);
+    //     part = textStartsWith(aim_text).findOne(2000);
+    //     console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // }    
+    // console.log('结束',aim_text)
+
+
+
+
+
 
     
-    aim_text = "激励视频任务"
-    console.log('开始',aim_text)
-    var part = textStartsWith(aim_text).findOne(2000);
+    // aim_text = "激励视频任务"
+    // console.log('开始',aim_text)
+    // var part = textStartsWith(aim_text).findOne(2000);
     // handleChildControls(part.parent().children());
-    bottom_ID = 3
-    console.log('按键状态',part.parent().children().get(bottom_ID).text())
-    while (part.parent().children().get(bottom_ID).text() == '看视频'){
-        clickParentIfClickable(part.parent().children().get(bottom_ID));
-        waitad()
-        sleep(1000);
-        clickParentIfClickable(text("我知道了").findOne(500))
-        sleep(1000);
-        part = textStartsWith(aim_text).findOne(2000);
-        console.log('按键状态',part.parent().children().get(bottom_ID).text())
-    }    
-    console.log('结束',aim_text)
+    // bottom_ID = 3
+    // console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // while (part.parent().children().get(bottom_ID).text() == '看视频'){
+    //     clickParentIfClickable(part.parent().children().get(bottom_ID));
+    //     waitad()
+    //     sleep(1000);
+    //     clickParentIfClickable(text("我知道了").findOne(500))
+    //     sleep(1000);
+    //     part = textStartsWith(aim_text).findOne(2000);
+    //     console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // }    
+    // console.log('结束',aim_text)
 
 
-    aim_text = "看视频领惊喜福利"
-    console.log('开始',aim_text)
-    var part = textStartsWith(aim_text).findOne(2000);
+    // aim_text = "看视频领惊喜福利"
+    // console.log('开始',aim_text)
+    // var part = textStartsWith(aim_text).findOne(2000);
     // handleChildControls(part.parent().children());
-    bottom_ID = 2
-    console.log('按键状态',part.parent().children().get(bottom_ID).text())
-    while (part.parent().children().get(bottom_ID).text() == '看视频'){
-        clickParentIfClickable(part.parent().children().get(bottom_ID));
-        waitad()
-        sleep(1000);
-        clickParentIfClickable(text("我知道了").findOne(500))
-        sleep(1000);
-        part = textStartsWith(aim_text).findOne(2000);
-        console.log('按键状态',part.parent().children().get(bottom_ID).text())
-    }
-    console.log('结束',aim_text)
+    // bottom_ID = 2
+    // console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // while (part.parent().children().get(bottom_ID).text() == '看视频'){
+    //     clickParentIfClickable(part.parent().children().get(bottom_ID));
+    //     waitad()
+    //     sleep(1000);
+    //     clickParentIfClickable(text("我知道了").findOne(500))
+    //     sleep(1000);
+    //     part = textStartsWith(aim_text).findOne(2000);
+    //     console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // }
+    // console.log('结束',aim_text)
 
 
 
-    aim_text = "额外看3次小视频得奖励"
-    console.log('开始',aim_text)
-    var part = textStartsWith(aim_text).findOne(2000);
+    // aim_text = "额外看3次小视频得奖励"
+    // console.log('开始',aim_text)
+    // var part = textStartsWith(aim_text).findOne(2000);
+    // // handleChildControls(part.parent().children());
+    // bottom_ID = 2
+    // console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // while (part.parent().children().get(bottom_ID).text() == '看视频'){
+    //     clickParentIfClickable(part.parent().children().get(bottom_ID));
+    //     waitad()
+    //     sleep(1000);
+    //     clickParentIfClickable(text("我知道了").findOne(500))
+    //     sleep(1000);
+    //     part = textStartsWith(aim_text).findOne(2000);
+    //     console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // }
+    // console.log('结束',aim_text)
+
+
+    // aim_text = "额外看1次小视频得奖励"
+    // console.log('开始',aim_text)
+    // var part = textStartsWith(aim_text).findOne(2000);
+    // // handleChildControls(part.parent().children());
+    // bottom_ID = 2
+    // console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // while (part.parent().children().get(bottom_ID).text() == '看视频'){
+    //     clickParentIfClickable(part.parent().children().get(bottom_ID));
+    //     waitad()
+    //     sleep(1000);
+    //     clickParentIfClickable(text("我知道了").findOne(500))
+    //     sleep(1000);
+    //     part = textStartsWith(aim_text).findOne(2000);
+    //     console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // }
+    // console.log('结束',aim_text)
+
+
+    // aim_text = "看视频获取白泽宇航员装扮"
+    // console.log('开始',aim_text)
+    // var part = textStartsWith(aim_text).findOne(2000);
     // handleChildControls(part.parent().children());
-    bottom_ID = 2
-    console.log('按键状态',part.parent().children().get(bottom_ID).text())
-    while (part.parent().children().get(bottom_ID).text() == '看视频'){
-        clickParentIfClickable(part.parent().children().get(bottom_ID));
-        waitad()
-        sleep(1000);
-        clickParentIfClickable(text("我知道了").findOne(500))
-        sleep(1000);
-        part = textStartsWith(aim_text).findOne(2000);
-        console.log('按键状态',part.parent().children().get(bottom_ID).text())
-    }
-    console.log('结束',aim_text)
-
-
-    aim_text = "额外看1次小视频得奖励"
-    console.log('开始',aim_text)
-    var part = textStartsWith(aim_text).findOne(2000);
-    // handleChildControls(part.parent().children());
-    bottom_ID = 2
-    console.log('按键状态',part.parent().children().get(bottom_ID).text())
-    while (part.parent().children().get(bottom_ID).text() == '看视频'){
-        clickParentIfClickable(part.parent().children().get(bottom_ID));
-        waitad()
-        sleep(1000);
-        clickParentIfClickable(text("我知道了").findOne(500))
-        sleep(1000);
-        part = textStartsWith(aim_text).findOne(2000);
-        console.log('按键状态',part.parent().children().get(bottom_ID).text())
-    }
-    console.log('结束',aim_text)
-
-
-    aim_text = "看视频获取白泽宇航员装扮"
-    console.log('开始',aim_text)
-    var part = textStartsWith(aim_text).findOne(2000);
-    handleChildControls(part.parent().children());
-    bottom_ID = 2
-    console.log('按键状态',part.parent().children().get(bottom_ID).text())
-    while (part.parent().children().get(bottom_ID).text() == '看视频'){
-        clickParentIfClickable(part.parent().children().get(bottom_ID));
-        waitad()
-        sleep(1000);
-        clickParentIfClickable(text("我知道了").findOne(500))
-        sleep(1000);
-        part = textStartsWith(aim_text).findOne(2000);
-        console.log('按键状态',part.parent().children().get(bottom_ID).text())
-    }
-    console.log('结束',aim_text)
+    // bottom_ID = 2
+    // console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // while (part.parent().children().get(bottom_ID).text() == '看视频'){
+    //     clickParentIfClickable(part.parent().children().get(bottom_ID));
+    //     waitad()
+    //     sleep(1000);
+    //     clickParentIfClickable(text("我知道了").findOne(500))
+    //     sleep(1000);
+    //     part = textStartsWith(aim_text).findOne(2000);
+    //     console.log('按键状态',part.parent().children().get(bottom_ID).text())
+    // }
+    // console.log('结束',aim_text)
 
 
 
@@ -1219,31 +1319,22 @@ function main() {
 
 
 function main222() {
-    unlockScreen()
-    launch_qidian_app()
+    // unlockScreen()
+    // launch_qidian_app()
 
-    qiandao()
-    looksp()
+    // qiandao()
+    // looksp()
     lookvd()
     playgame()
     kapai()
 
+    // while (true) {
+    //     readbook(30 * 60)
+    //     kapai()
 
-    // yuepiaocnt = check_yuepiao()
-    while (true) {
-        readbook(30 * 60)
-        kapai()
-
-        // if (checkTime2() & yuepiaocnt > 0 & checkDateAfterSet()) {
-        //     log("符合抢红包日期和时间");
-        //     log("还剩月票：", yuepiaocnt);
-
-        //     mo_yue_redbag()
-
-        //     yuepiaocnt = check_yuepiao()
-        // }
-        get_read_jifen()
-    }
+      
+    //     get_read_jifen()
+    // }
     log("所有任务全部完成")
 }
 function touzi() {
