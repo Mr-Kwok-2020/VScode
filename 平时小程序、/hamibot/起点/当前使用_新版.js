@@ -1242,10 +1242,10 @@ configure()
 
 
 var thread1 = threads.start(function () {
-    setScreenBrightness();
+    // setScreenBrightness();
     while (1) {
         sleep(1000)
-        keep_silent()
+        // keep_silent()
     }
 });
 var yuepiaocnt = 0
@@ -1997,9 +1997,13 @@ function handleChildControls(children) {
     }
 }
 
-// function findAndLogButtonPath(root, aimText, isPrint) {
-//     let resultCount = 0; // 计数器，记录找到的目标按钮数量
 
+// function findAndLogButtonPath(root, aimText, referenceText, isPrint) {
+//     let resultCount = 0; // 计数器，记录找到的目标按钮数量
+//     let aimButtons = [];  // 保存所有包含aimText的按钮信息
+//     let referenceButton = null; // 保存包含referenceText的控件信息
+
+//     // 查找并保存包含aimText按钮的位置
 //     function traverse(node, path) {
 //         if (node == null) return;
 
@@ -2009,14 +2013,16 @@ function handleChildControls(children) {
 //         // 检查当前控件是否包含目标文本
 //         if (node.text() && node.text().includes(aimText)) {
 //             resultCount++; // 增加找到的目标按钮数量
-            
-//             // 根据 isPrint 决定是否打印路径
+//             aimButtons.push({ node, path, depth: getDepth(node), index: resultCount });  // 保存按钮及路径和编号
 //             if (isPrint) {
 //                 console.log(`结果 ${resultCount}: 找到目标按钮: "${node.text()}", 路径: ${path}`);
 //                 console.log(""); // 打印空白行
-//                 console.log(""); // 打印空白行
-//                 console.log(""); // 打印空白行
 //             }
+//         }
+
+//         // 检查是否包含referenceText
+//         if (node.text() && node.text().includes(referenceText)) {
+//             referenceButton = { node, path, depth: getDepth(node) };  // 保存referenceText的按钮
 //         }
 
 //         // 遍历子控件
@@ -2030,11 +2036,66 @@ function handleChildControls(children) {
 //         }
 //     }
 
+//     // 计算控件的深度
+//     function getDepth(node) {
+//         let depth = 0;
+//         while (node.parent()) {
+//             node = node.parent();
+//             depth++;
+//         }
+//         return depth;
+//     }
+
 //     // 开始从根控件遍历
 //     traverse(root, "根控件: \"" + (root.text() || "无文本") + "\"");
 
+//     // 判断是否找到了referenceText
+//     if (!referenceButton) {
+//         console.log("未找到包含参考文本的按钮！");
+//         return null; // 如果没有找到referenceText按钮，返回null
+//     }
+
+//     // 查找离referenceText最近的aimText按钮
+//     let closestButton = null;
+//     let minDistance = Infinity;
+
+//     aimButtons.forEach((button) => {
+//         // 计算深度差异，深度越接近代表越近
+//         let depthDifference = Math.abs(button.depth - referenceButton.depth);
+//         if (depthDifference < minDistance) {
+//             minDistance = depthDifference;
+//             closestButton = button;
+//         }
+//     });
+
+//     // 打印离referenceText最近的aimText按钮路径
+//     if (closestButton) {
+//         console.log(`离 "${referenceText}" 最近的按钮是: "结果 ${closestButton.index}: ${closestButton.node.text()}", 路径: ${closestButton.path}`);
+//         console.log(""); // 打印空白行
+//     }
+
+
+
 //     // 打印找到的按钮总数
 //     console.log(`总共找到 ${resultCount} 个包含 "${aimText}" 的按钮`);
+
+//     // 返回离referenceText最近的按钮
+//     return closestButton ? closestButton.node : null;
+// }
+
+// // 找到最接近的两个按钮的共同母分支
+// function findCommonParent(node1, node2) {
+//     let parent1 = node1.parent();
+//     let parent2 = node2.parent();
+
+//     while (parent1 && parent2) {
+//         if (parent1 == parent2) {
+//             return parent1;
+//         }
+//         parent1 = parent1.parent();
+//         parent2 = parent2.parent();
+//     }
+//     return null;  // 如果没有共同父节点，返回null
 // }
 
 
@@ -2042,145 +2103,23 @@ function handleChildControls(children) {
 // var rootControl = className("android.widget.FrameLayout").depth(0).findOne();
 // if (rootControl) {
 //     var aimText = "去完成";  // 设置目标文本
+//     var referenceText = "当日玩游戏10分钟";  // 设置参考文本
+    
+//     // var referenceText = "每周新打开3本作品的更新提醒";  // 设置参考文本
 //     var isPrint = true;  // 设置是否打印路径
     
 //     console.log("开始检测包含‘" + aimText + "’按钮的控件路径");
-//     findAndLogButtonPath(rootControl, aimText, isPrint);
+//     var closestButtonNode = findAndLogButtonPath(rootControl, aimText, referenceText, isPrint);
+//     if (closestButtonNode) {
+//         console.log("返回的最接近按钮节点:", closestButtonNode.text());
+//     } else {
+//         console.log("未找到最接近的按钮节点");
+//     }
+
+    
+//     console.log("该点位子控件");
+//     handleChildControls(closestButtonNode.parent().parent().children())
 //     console.log("检测完成");
 // } else {
 //     console.log("未找到根控件");
 // }
-
-
-function findAndLogButtonPath(root, aimText, referenceText, isPrint) {
-    let resultCount = 0; // 计数器，记录找到的目标按钮数量
-    let aimButtons = [];  // 保存所有包含aimText的按钮信息
-    let referenceButton = null; // 保存包含referenceText的控件信息
-
-    // 查找并保存包含aimText按钮的位置
-    function traverse(node, path) {
-        if (node == null) return;
-
-        // 当前控件的文本信息
-        var nodeText = node.text() ? node.text() : "无文本";
-        
-        // 检查当前控件是否包含目标文本
-        if (node.text() && node.text().includes(aimText)) {
-            resultCount++; // 增加找到的目标按钮数量
-            aimButtons.push({ node, path, depth: getDepth(node), index: resultCount });  // 保存按钮及路径和编号
-            if (isPrint) {
-                console.log(`结果 ${resultCount}: 找到目标按钮: "${node.text()}", 路径: ${path}`);
-                console.log(""); // 打印空白行
-            }
-        }
-
-        // 检查是否包含referenceText
-        if (node.text() && node.text().includes(referenceText)) {
-            referenceButton = { node, path, depth: getDepth(node) };  // 保存referenceText的按钮
-        }
-
-        // 遍历子控件
-        var children = node.children();
-        if (children && children.size() > 0) {
-            for (var i = 0; i < children.size(); i++) {
-                var child = children.get(i);
-                var childPath = `${path} -> 子控件(${i}): "${child.text() || "无文本"}"`;
-                traverse(child, childPath);
-            }
-        }
-    }
-
-    // 计算控件的深度
-    function getDepth(node) {
-        let depth = 0;
-        while (node.parent()) {
-            node = node.parent();
-            depth++;
-        }
-        return depth;
-    }
-
-    // 开始从根控件遍历
-    traverse(root, "根控件: \"" + (root.text() || "无文本") + "\"");
-
-    // 判断是否找到了referenceText
-    if (!referenceButton) {
-        console.log("未找到包含参考文本的按钮！");
-        return null; // 如果没有找到referenceText按钮，返回null
-    }
-
-    // 查找离referenceText最近的aimText按钮
-    let closestButton = null;
-    let minDistance = Infinity;
-
-    aimButtons.forEach((button) => {
-        // 计算深度差异，深度越接近代表越近
-        let depthDifference = Math.abs(button.depth - referenceButton.depth);
-        if (depthDifference < minDistance) {
-            minDistance = depthDifference;
-            closestButton = button;
-        }
-    });
-
-    // 打印离referenceText最近的aimText按钮路径
-    if (closestButton) {
-        console.log(`离 "${referenceText}" 最近的按钮是: "结果 ${closestButton.index}: ${closestButton.node.text()}", 路径: ${closestButton.path}`);
-        console.log(""); // 打印空白行
-    }
-
-    // 打印从共同母分支开始到最接近按钮的一层所有结构
-    if (closestButton) {
-        let commonParent = findCommonParent(closestButton.node, referenceButton.node);
-        if (commonParent) {
-            console.log("共同母分支开始：");
-            printStructure(commonParent);
-        }
-    }
-
-    // 打印找到的按钮总数
-    console.log(`总共找到 ${resultCount} 个包含 "${aimText}" 的按钮`);
-
-    // 返回离referenceText最近的按钮
-    return closestButton ? closestButton.node : null;
-}
-
-// 找到最接近的两个按钮的共同母分支
-function findCommonParent(node1, node2) {
-    let parent1 = node1.parent();
-    let parent2 = node2.parent();
-
-    while (parent1 && parent2) {
-        if (parent1 == parent2) {
-            return parent1;
-        }
-        parent1 = parent1.parent();
-        parent2 = parent2.parent();
-    }
-    return null;  // 如果没有共同父节点，返回null
-}
-
-
-// 获取屏幕的根控件
-var rootControl = className("android.widget.FrameLayout").depth(0).findOne();
-if (rootControl) {
-    var aimText = "去完成";  // 设置目标文本
-    var referenceText = "当日玩游戏10分钟";  // 设置参考文本
-    
-    // var referenceText = "每周新打开3本作品的更新提醒";  // 设置参考文本
-    var isPrint = true;  // 设置是否打印路径
-    
-    console.log("开始检测包含‘" + aimText + "’按钮的控件路径");
-    var closestButtonNode = findAndLogButtonPath(rootControl, aimText, referenceText, isPrint);
-    if (closestButtonNode) {
-        console.log("返回的最接近按钮节点:", closestButtonNode.text());
-    } else {
-        console.log("未找到最接近的按钮节点");
-    }
-
-
-    
-    clickParentIfClickable(closestButtonNode)
-    console.log("检测完成");
-} else {
-    console.log("未找到根控件");
-}
