@@ -132,9 +132,6 @@ function isHomeScreen() {
     // 检测当前界面是否为主页面
     // 是否符合主页面的特征
     sleep(2000)
-    home()
-    home()
-    home()
     if (text("QQ").exists() & text("起点读书").exists() & text("微信").exists()) {
         log("主页面");
         return true
@@ -276,10 +273,15 @@ function configure() {
 function launch_app_WangZheYingDi() {
     log("启动应用------------");
     home()
-    className("android.widget.TextView").text("王者营地").findOne().click()
-    sleep(5000)
+    while(isHomeScreen()){
+        className("android.widget.TextView").text("王者营地").findOne().click()
+        sleep(5000)
+    }
+
+
 
     log("应用已启动")
+
 
     while(!(text("关注").exists() & text("聊天").exists() & text("社区").exists())){
         back()
@@ -307,10 +309,10 @@ function launch_app_WangZheYingDi() {
 
 }
 function getInfoByAimID(aim_ID) {
-    log("开始获取信息");
+    // log("开始获取信息");
 
     sleep(2000);
-    log("刷新当前页面");
+    // log("刷新当前页面");
 
     // 手势操作刷新页面
     gesture(200, [centerX, bottom * 0.25], [centerX, bottom * 0.75]);
@@ -433,6 +435,8 @@ function main(){
         // result.content !== lastStatus) {
         if (result.content !== lastStatus) {
             console.log(result.time, result.aimID, result.content);
+            // 使手机震动1秒（1000毫秒）
+            device.vibrate(2000);
 
             // 将状态历史记录到文件
             let statusHistory = [
